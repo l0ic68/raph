@@ -4,14 +4,12 @@ namespace Main\MainBundle\Controller;
 
 use Main\MainBundle\Entity\Commentary;
 use Main\MainBundle\Entity\Media;
-use Main\MainBundle\Entity\Products;
 use Main\MainBundle\Form\CommentaryType;
 use Main\MainBundle\Form\MediaType;
-use Main\MainBundle\Form\ProductsAdminType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Main\MainBundle\Entity\Contact;
-use Main\MainBundle\Entity\Activity;
 use Main\MainBundle\Entity\ActivityProposal;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Main\MainBundle\Form\ContactType;
 use Main\MainBundle\Form\ActivityProposal1Type;
 use Symfony\Component\HttpFoundation\Request;
@@ -184,22 +182,39 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $evenement = $this->getDoctrine()->getRepository('MainBundle:Activity')->findOneById($id);
-//        $commentary= new Commentary();
         $media= new Media();
 
-        $form = $this->createForm(new MediaType());
+        $form = $this->createForm(new MediaType() , $media);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-//            $evenement->addMedia($this->getReference($media));
+           $evenement->addMedia($media);
             $em->persist($media);
             $em->flush();
         }
 
         return $this->render('MainBundle:Default:layout\AddImage.html.twig', array('evenement' => $evenement,'form' => $form->createView()));
     }
+    public function likeAction()
+    {
+        $request = $this->container->get('request');
+        $text = $request->query->get('text');
+        $article_id =$request->query->get('text');
+        $em = $this->getDoctrine()->getManager();
+        $event =  $em->getRepository('MainBundle:ActivityProposal')->find($article_id);
+        $event->setlikeActivity($event->getLikeActivity()+1);
+        $em->persist($event);
+        $em->flush();
 
+        $content = $this->RenderView('MainBundle:Default:layout\test.html.twig', array(
+            'proposition' => $event,
+        ));
+
+        $response = new JsonResponse();
+        $response->setData(array('classifiedList' => $content));
+        return $response;
+    }
 
 
 //    public function formCommentary(Request $request)

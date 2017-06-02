@@ -56,11 +56,10 @@ class Activity
     private $description;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="PictureSource", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Main\MainBundle\Entity\Media", cascade={"persist","remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $pictureSource;
+    private $picture;
 
 //    /**
 //     * @ORM\ManyToMany(targetEntity="Main\MainBundle\Entity\Media", cascade={"persist","remove"})
@@ -252,29 +251,6 @@ class Activity
         return $this->description;
     }
 
-    /**
-     * Set pictureSource
-     *
-     * @param string $pictureSource
-     *
-     * @return Activity
-     */
-    public function setPictureSource($pictureSource)
-    {
-        $this->pictureSource = $pictureSource;
-
-        return $this;
-    }
-
-    /**
-     * Get pictureSource
-     *
-     * @return string
-     */
-    public function getPictureSource()
-    {
-        return $this->pictureSource;
-    }
 
     /**
      * Set user
@@ -308,5 +284,29 @@ class Activity
     public function getMedia()
     {
         return $this->media;
+    }
+
+    /**
+     * Set picture
+     *
+     * @param \Main\MainBundle\Entity\Media $picture
+     *
+     * @return Activity
+     */
+    public function setPicture(\Main\MainBundle\Entity\Media $picture)
+    {
+        $this->picture = $picture;
+    
+        return $this;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return \Main\MainBundle\Entity\Media
+     */
+    public function getPicture()
+    {
+        return $this->picture;
     }
 }

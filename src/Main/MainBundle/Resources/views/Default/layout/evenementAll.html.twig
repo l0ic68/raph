@@ -6,11 +6,9 @@
     {% for activity in activitys %}
         <section class="col-lg-4 ActionRealise">
             <div class="pastAction">
-                {% for media in activity.media %}
                     <div style="border: 2px black solid; text-align: center; margin: 10px;">
-                        <img class="pastActionImg" src="{{ asset(media.path) }}">
+                        <img class="pastActionImg" src="{{ asset(activity.picture.path) }}">
                     </div>
-                {% endfor %}
                 {#<img  class ="pastActionImg" src="{{ asset(activity.media.path) }}">#}
                 <h4 class="TitreAction">{{ activity.name[:50] }}</h4>
                 {#<p class="DateAction">{{ action.dateDebut| date() }}</p>#}

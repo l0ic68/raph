@@ -84,3 +84,7 @@ website_AddImage:
       _controller: MainBundle:Default:AddImage
     requirements:
       id: \d+
+
+like:
+    path:     /like
+    defaults: { _controller: MainBundle:Default:Like }

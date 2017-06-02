@@ -14,7 +14,13 @@ class ActivityAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->add('dateActivity')->add('price')->add('description')->add('pictureSource')->add('user')->add('media', new MediaType());
+        $builder
+            ->add('name')
+            ->add('dateActivity')
+            ->add('price')
+            ->add('description')
+            ->add('picture',new MediaType())
+            ->add('user');
     }
     
     /**
